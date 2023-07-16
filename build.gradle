@@ -1,0 +1,30 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
+}
+
+application.mainClass = 'fr.neobile.cryptofr.Main'
+group = 'fr.neobile.cryptofr'
+version = '1.0-SNAPSHOT'
+
+shadowJar {
+    archiveFileName = 'CryptoFR.jar'
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'net.dv8tion:JDA:5.0.0-beta.12'
+    implementation group: 'org.json', name: 'json', version: '20090211'
+    implementation group: 'io.github.artemnefedov', name: 'javaai', version: '0.3.4'
+}
+
+compileJava {
+    options.encoding = 'UTF-8'
+    options.incremental = true
+    sourceCompatibility = "1.8"
+}
