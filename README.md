@@ -1,0 +1,3 @@
+# CryptoFR Discord Bot
+
+Test
