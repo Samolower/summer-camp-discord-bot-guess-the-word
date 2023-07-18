@@ -13,7 +13,7 @@ module.exports = async (bot, message) => {
 
             // Féliciter le joueur
             const eb = new DJS.EmbedBuilder()
-            eb.setDescription("「:white_check_mark:」Félicitation <@" + message.author.id + "> !");
+            eb.setDescription("「:white_check_mark:」Félicitations <@" + message.author.id + "> !");
             message.reply({ embeds: [eb] }).catch(console.error);
 
             // Récupérer le dernier message du bot dans le channel et le modifier
