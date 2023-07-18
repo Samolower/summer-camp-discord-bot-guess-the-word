@@ -1,0 +1,5 @@
+services:
+  crypto-fr-bot-guess-word:
+    build: ./src
+    volumes:
+      - ./dataFiles:/usr/src/app/dataFiles
