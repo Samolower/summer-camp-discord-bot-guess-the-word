@@ -5,7 +5,7 @@ const pointFunctions = require("../fileFunctions/pointFunctions.js");
 module.exports = async (bot, message) => {
 
     if (message.channel.id == process.env.CHAN_ID_GAME && txtFunctions.isFileNotEmpty("./dataFiles/wordtofind.txt")) {
-        if (message.content === txtFunctions.readWord("./dataFiles/wordtofind.txt")) {
+        if (message.content.toLowerCase() === txtFunctions.readWord("./dataFiles/wordtofind.txt")) {
             let word = txtFunctions.readWord("./dataFiles/wordtofind.txt");
 
             // Ajouter une réaction "✅" au message
@@ -26,7 +26,8 @@ module.exports = async (bot, message) => {
                 if(lastBotEmbedMessage) {
                     const lastEmbed = lastBotEmbedMessage.embeds[0];
                     const modifiedEmbed = new DJS.EmbedBuilder()
-                        .setColor('Green')
+                        .setTitle("「:pencil2:」Summer Game: Guess the word !")
+                        .setColor("#00ff00")
                         .setDescription(`A vous de deviner l'expression crypto qui se cache derrière cette image !\n\nBonne chance !\n\nTrouvé par : Trouvé par <@${message.author.id}> ! Il fallait trouver **"${word}"**`)
                         .setImage(lastEmbed.image?.url);
 
@@ -56,15 +57,24 @@ module.exports = async (bot, message) => {
                 let description = '';
                 let position = 1;
                 for (const entry of sortedPlayers) {
-                  const playerId = entry[0];
-                  const playerPoints = entry[1];
-                  description += `#${position}: <@${playerId}> - ${playerPoints} point(s)\n`;
-                  position++;
+                    const playerId = entry[0];
+                    const playerPoints = entry[1];
+
+                    // Ajout d'un emoji special pour les trois premiers
+                    let tag = position;
+                    if (position === 1) tag = ':first_place:';
+                    else if (position === 2) tag = ':second_place:';
+                    else if (position === 3) tag = ':third_place:';
+                  
+
+                    description += `→ **#${tag}** <@${playerId}> : **${playerPoints} point(s)**\n`;
+                    position++;
                 }
               
                 // Créer le nouvel Embed pour le classement
                 const modifiedEmbed = new DJS.EmbedBuilder()
-                    .setColor('Green')
+                    .setTitle("「:trophy:」Classement des Summer Games")
+                    .setColor("#00ff00")
                     .setDescription(description);
 
                 const lastBotEmbedMessage = classementMessages.find(msg => msg.author.bot && msg.embeds.length > 0);
@@ -81,7 +91,8 @@ module.exports = async (bot, message) => {
         }
         else {
             const words = message.content.trim().split(/\s+/);
-            if (words.length === 1 && !message.author.bot) message.react('❌').catch(console.error);
+            const wordtofind = txtFunctions.readWord("./dataFiles/wordtofind.txt").trim().split(/\s+/);
+            if (words.length <= wordtofind.length && !message.author.bot) message.react('❌').catch(console.error);
         }
     }
 }
