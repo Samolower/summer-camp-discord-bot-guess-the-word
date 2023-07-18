@@ -111,11 +111,29 @@ Voici les élémens à avoir en local avant de démarrer :
    1. Ladder : Ou le classement des uitlisateurs sera affiché et mis à jour automatiquement par le bot.
    2. Guess : Ou les admins pourront lancer de nouveaux mots avec /guess.
    3. Game : Ou les utilisateurs cherche le mot. Le bot validera automatiquement les réponses.
-2. Récupérer les ID des channels et les positionner dans `events/messageCreate.js` (cette partie devra évoluer. Il n'est pas viable de devoir modifier le code pour positionner les channels)
+2. Créer les variables d'environnement dans le fichier .env :
+   ```sh
+   mv .env-sample .env
+   ```
+   Avec :
+   ```sh
+    BOT_TOKEN="Insert your bot token"  
+    CHAN_ID_NEW_WORD="Where images are added using /guess"  
+    CHAN_ID_LADDER="Where ladder is displayed"  
+    CHAN_ID_GAME="Where members can try to find the word"  
+    CHAN_URL_GAME="URL to the chan where members can try to find the word"  
+   ```
+
 3. Inviter le bot sur son discord et lui positionner les droits Admin.
 4. Lancer le bot :
+   1. En local:
    ```sh
    node main.js
+   ```
+
+   2. Via Docker :
+   ```sh
+   docker compose up
    ```
 
 <p align="right">(<a href="#readme-top">retour en haut</a>)</p>
