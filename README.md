@@ -117,11 +117,10 @@ Voici les élémens à avoir en local avant de démarrer :
    ```
    Avec :
    ```sh
-    BOT_TOKEN="Insert your bot token"  
-    CHAN_ID_NEW_WORD="Where images are added using /guess"  
-    CHAN_ID_LADDER="Where ladder is displayed"  
-    CHAN_ID_GAME="Where members can try to find the word"  
-    CHAN_URL_GAME="URL to the chan where members can try to find the word"  
+    BOT_TOKEN="Insert your bot token"
+    CHAN_ID_NEW_WORD="Where images are added using /guess"
+    CHAN_ID_LADDER="Where ladder is displayed"
+    CHAN_ID_GAME="Where members can try to find the word"
    ```
 
 3. Inviter le bot sur son discord et lui positionner les droits Admin.

@@ -34,7 +34,10 @@ module.exports = {
         let mention = args.get("auteur").value;
 
         const eb = new DJS.EmbedBuilder()
-        eb.setColor("Red").setDescription("A vous de deviner l'expression crypto qui se cache derrière cette image !\n\nBonne chance ! (Proposé par " + mention + ")\n\nTrouvé par : Personne n'a encore trouvé ! Faites vos propositions dans " + process.env.CHAN_URL_GAME).setImage(imageLink);
+            .setColor("#da262e")
+            .setTitle("「:pencil2:」Summer Game: Guess the word !")
+            .setDescription("A vous de deviner l'expression crypto qui se cache derrière cette image !\n\nBonne chance ! (Proposé par " + mention + ")\n\nTrouvé par : Personne n'a encore trouvé ! Faites vos propositions dans <#" + process.env.CHAN_ID_GAME + ">")
+            .setImage(imageLink);
         fileFunctions.writeWord(word);
         
         message.reply({embeds: [eb]});
