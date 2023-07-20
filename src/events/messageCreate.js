@@ -28,7 +28,7 @@ module.exports = async (bot, message) => {
                     const modifiedEmbed = new DJS.EmbedBuilder()
                         .setTitle("「:pencil2:」Summer Game: Guess the word !")
                         .setColor("#00ff00")
-                        .setDescription(`A vous de deviner l'expression crypto qui se cache derrière cette image !\n\nBonne chance !\n\nTrouvé par : Trouvé par <@${message.author.id}> ! Il fallait trouver **"${word}"**`)
+                        .setDescription(`A vous de deviner l'expression crypto qui se cache derrière cette image !\n\nBonne chance !\n\nTrouvé par : <@${message.author.id}> ! Il fallait trouver **"${word}"**`)
                         .setImage(lastEmbed.image?.url);
 
                     lastBotEmbedMessage.edit({ embeds: [modifiedEmbed] }).catch(console.error);
