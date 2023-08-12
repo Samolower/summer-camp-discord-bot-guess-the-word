@@ -4,7 +4,31 @@ const pointFunctions = require("../fileFunctions/pointFunctions.js");
 
 module.exports = async (bot, message) => {
 
-    if (message.channel.id == process.env.CHAN_ID_GAME && txtFunctions.isFileNotEmpty("./dataFiles/wordtofind.txt")) {
+    // Vérifier si l'auteur du message est l'auteur du mot à trouver
+
+    var idAuthor = "";
+
+    const channelId =  process.env.CHAN_ID_NEW_WORD;
+    const channelEvent = message.guild.channels.cache.get(channelId);
+
+    channelEvent.messages.fetch({ limit: 1 }).then(messages => {
+        const lastMessage = messages.first();
+
+        if (lastMessage.embeds.length > 0) {
+            const lastEmbed = lastMessage.embeds[0];
+
+            const mentionRegex = /<@(\d+)>/g;
+            const matches = lastEmbed.description.match(mentionRegex);
+
+            if (matches) {
+                idAuthor = matches.map(match => match.replace(/<@(\d+)>/, "$1"))[0];
+            }
+        }
+    }).catch(console.error);
+
+    await new Promise(resolve => setTimeout(resolve, 500));
+
+    if (message.channel.id == process.env.CHAN_ID_GAME && idAuthor !== message.author.id && txtFunctions.isFileNotEmpty("./dataFiles/wordtofind.txt")) {
         if (message.content.toLowerCase() === txtFunctions.readWord("./dataFiles/wordtofind.txt")) {
             let word = txtFunctions.readWord("./dataFiles/wordtofind.txt");
 
@@ -56,9 +80,17 @@ module.exports = async (bot, message) => {
                 // Créer la description pour l'embed du classement
                 let description = '';
                 let position = 1;
+                let lastPlayerPoints = null;
+
                 for (const entry of sortedPlayers) {
                     const playerId = entry[0];
                     const playerPoints = entry[1];
+
+                    // Attribuer la même position aux joueurs ayant le même nombre de points
+                    if (playerPoints !== lastPlayerPoints) {
+                        position = sortedPlayers.indexOf(entry) + 1;
+                        lastPlayerPoints = playerPoints;
+                    }
 
                     // Ajout d'un emoji special pour les trois premiers
                     let tag = position;
@@ -66,9 +98,7 @@ module.exports = async (bot, message) => {
                     else if (position === 2) tag = ':second_place:';
                     else if (position === 3) tag = ':third_place:';
                   
-
                     description += `→ **#${tag}** <@${playerId}> : **${playerPoints} point(s)**\n`;
-                    position++;
                 }
               
                 // Créer le nouvel Embed pour le classement
